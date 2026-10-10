@@ -1,0 +1,42 @@
+AuraCall: upload the complete Android project from your phone
+
+IMPORTANT
+- Extract this ZIP first.
+- Keep the folder structure exactly as it is. Do not upload Kotlin/XML/Gradle files all into the repository root.
+- This workflow installs Gradle in GitHub Actions, so gradle-wrapper.jar is NOT required for the cloud APK build. The project can be built in Actions using the workflow at .github/workflows/android.yml.
+
+Recommended Android-only method (Termux + Git)
+1. Install Termux from its official F-Droid/GitHub source.
+2. Open Termux and run:
+   termux-setup-storage
+   pkg update
+   pkg install git unzip
+3. Put AuraCall-Final-GitHub-APK.zip in your phone's Download folder.
+4. Run:
+   cd ~/storage/downloads
+   unzip AuraCall-Final-GitHub-APK.zip
+   cd AuraCall
+5. Configure Git (use your own display name/email):
+   git config --global user.name "Your Name"
+   git config --global user.email "you@example.com"
+6. Initialize and commit the project:
+   git init
+   git branch -M main
+   git add .
+   git commit -m "Upload complete AuraCall Android project"
+7. In GitHub, open your AuraCall repository, press Code, and copy the HTTPS URL. Then run, replacing the example URL with the copied URL:
+   git remote add origin https://github.com/YOUR-USERNAME/AuraCall.git
+8. Your repository currently contains incorrectly flattened files. To replace that existing main branch with the correct folder structure, run ONLY if you are sure you want to replace its current contents:
+   git push -u origin main --force
+   This overwrites the current main branch contents/history with the local project.
+9. If Git asks for a password, use a GitHub Personal Access Token (PAT), not your GitHub account password. Never share the token with anyone or paste it into chat.
+10. On GitHub, open Actions -> AuraCall Android APK. Wait for the workflow to finish. If successful, open the completed run and download the AuraCall-debug-APK artifact.
+
+Build details
+- Java 17
+- Gradle 8.9 installed by the workflow
+- Android SDK Platform 35
+- APK output: app/build/outputs/apk/debug/*.apk
+
+LIMITATION
+This is a debug APK workflow. WhatsApp/Telegram call audio capture is not guaranteed; Android restricts access to other apps' communication audio. Use recording only with appropriate consent.
